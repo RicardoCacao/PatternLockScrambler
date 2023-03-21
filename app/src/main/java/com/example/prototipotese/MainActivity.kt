@@ -2,19 +2,21 @@ package com.example.prototipotese
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.andrognito.patternlockview.PatternLockView
 import com.andrognito.patternlockview.PatternLockView.Dot
 import com.andrognito.patternlockview.listener.PatternLockViewListener
-import com.andrognito.patternlockview.utils.PatternLockUtils
 import com.example.prototipotese.databinding.ActivityMainBinding
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 
-//private const val TAG = "Activity Main"
+private const val TAG = "Activity Main"
 const val StoredPatternInSettings = "034125"
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
 
+    public lateinit var hora: String
     private lateinit var binding: ActivityMainBinding
     private lateinit var mPatternLockView: PatternLockView
 
@@ -26,31 +28,49 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         mPatternLockView = binding.patternLockView
         mPatternLockView.addPatternLockListener(mPatternLockViewListener)
-        val rotateButton = binding.rotateButton
-        rotateButton.setOnClickListener(this)
+
+        DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+        binding.clockTextView.text = DateTimeFormatter
+            .ofPattern("HH:mm")
+            .withZone(ZoneOffset.UTC)
+            .format(Instant.now())
+
+
+//        val rotateButton = binding.rotateButton
+//        rotateButton.setOnClickListener(this)
+
+
     }
 
     private val mPatternLockViewListener: PatternLockViewListener =
         object : PatternLockViewListener {
             override fun onStarted() {
+                hora = DateTimeFormatter
+                    .ofPattern("HH:mm")
+                    .withZone(ZoneOffset.UTC)
+                    .format(Instant.now())
+                binding.clockTextView.text = hora
                 Log.d(javaClass.name, "Pattern drawing started")
+
             }
 
             override fun onProgress(progressPattern: List<Dot>) {
                 Log.d(
                     javaClass.name, "Pattern progress: " +
-                            PatternLockUtils.patternToString(mPatternLockView, progressPattern)
+                            patternToString(mPatternLockView, progressPattern)
                 )
             }
 
             override fun onComplete(pattern: List<Dot>) {
                 Log.d(
                     javaClass.name, "Pattern complete: " +
-                            PatternLockUtils.patternToString(mPatternLockView, pattern)
+                            patternToString(mPatternLockView, pattern)
                 )
-                val lista = PatternLockUtils.patternToString(mPatternLockView,pattern).split("").filterNot { it.isBlank() }.map { it.toInt() }
+                val lista = patternToString(mPatternLockView,pattern).split(",").filterNot { it.isBlank() }.map { it.toInt() }
                 val size = binding.patternLockView.dotCount
-                MatrixOperations.listToMatrix(lista,size,size)
+
+                val matrix = MatrixOperations.listToMatrix(lista,size,size)
+
 
             }
 
@@ -59,7 +79,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-    override fun onClick(v: View?) {
+
+    fun patternToString(
+        patternLockView: PatternLockView,
+        pattern: List<Dot>?
+    ): String {
+        if (pattern == null) {
+            return ""
+        }
+        val patternSize = pattern.size
+        val stringBuilder = StringBuilder()
+        for (i in 0 until patternSize) {
+            val dot = pattern[i]
+            stringBuilder.append(dot.row * patternLockView.dotCount + dot.column).append(",")
+        }
+        return stringBuilder.toString()
+    }
+
+
+
+
+/*    override fun onClick(v: View?) {
 
         if (v != null) {
             when (v.id) {
@@ -67,57 +107,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     TransformationAlgorithm.rotate90Degrees(StoredPatternInSettings)
     //              finish()
                 }
-    /*            binding.humidityCard.id -> {
-                    val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                    goToGraphActivity.putExtra("Parameter", "humidity")
-                    goToGraphActivity.putExtra("Station", "$stationId")
-                    startActivity(goToGraphActivity)
-    //              finish()
-                }
-                binding.soilTemperatureCard.id -> {
-                    val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                    goToGraphActivity.putExtra("Parameter", "soiltemperature")
-                    goToGraphActivity.putExtra("Station", "$stationId")
-                    startActivity(goToGraphActivity)
-    //              finish()
-                }
-                binding.soilHumidityCard.id -> {
-                    val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                    goToGraphActivity.putExtra("Parameter", "soilhumidity")
-                    goToGraphActivity.putExtra("Station", "$stationId")
-                    startActivity(goToGraphActivity)
-    //              finish()
-                }
-
-                binding.pressureCard.id -> {
-                    val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                    goToGraphActivity.putExtra("Parameter", "barometricpressure")
-                    goToGraphActivity.putExtra("Station", "$stationId")
-                    startActivity(goToGraphActivity)
-    //              finish()
-                }
-                binding.rain24HrsCard.id -> {
-                    val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                    goToGraphActivity.putExtra("Parameter", "precipitation")
-                    goToGraphActivity.putExtra("Station", "$stationId")
-                    startActivity(goToGraphActivity)
-    //              finish()
-                }
-                binding.windSpeedCard.id -> {
-                    val goToGraphActivity = Intent(applicationContext, GraphActivity::class.java)
-                    goToGraphActivity.putExtra("Parameter", "windspeed")
-                    goToGraphActivity.putExtra("Station", "$stationId")
-                    startActivity(goToGraphActivity)
-    //              finish()
-                }
-                binding.locationNameTextView.id -> {
-                    val goToGraphActivity =
-                        Intent(applicationContext, MapsMarkerActivity::class.java)
-                    goToGraphActivity.putExtra("Parameter", "windspeed")
-                    goToGraphActivity.putExtra("Station", "$stationId")
-                    startActivity(goToGraphActivity)
-                }*/
             }
         }
-    }
+    }*/
 }

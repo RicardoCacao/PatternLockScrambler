@@ -30,11 +30,14 @@
         android:id="@+id/clockTextView"
         android:layout_width="195dp"
         android:layout_height="92dp"
+        android:scaleX="2"
+        android:scaleY="2"
         android:text="@string/hourminute"
         app:layout_constraintBottom_toTopOf="@+id/pattern_lock_view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.925"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintVertical_bias="0.477" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
