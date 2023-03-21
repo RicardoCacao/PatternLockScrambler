@@ -16,7 +16,12 @@ object MatrixOperations {
         var index = 0
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                matrix[i][j] = list[index++]
+                if (index < list.size) {
+                    matrix[i][j] = list[index]
+                    index++
+                } else {
+                    break
+                }
             }
         }
         for ( f in matrix.indices){
