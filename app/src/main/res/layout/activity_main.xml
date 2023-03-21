@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:dotCount="4"
+        app:dotCount="3"
         app:dotNormalSize="12dp"
         app:dotSelectedSize="24dp"
         app:pathWidth="4dp"
@@ -37,5 +37,15 @@
         app:wrongStateColor="@color/pomegranate"
         app:dotAnimationDuration="200"
         app:pathEndAnimationDuration="100"    />
+
+    <Button
+        android:id="@+id/rotateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rotateNegative90"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

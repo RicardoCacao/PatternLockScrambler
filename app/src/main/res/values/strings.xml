@@ -1,3 +1,5 @@
-<resources>
-    <string name="app_name">PrototipoTese</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">PrototipoTese</string>
+    <string name="rodar_90_graus" tools:ignore="ExtraTranslation" translatable="false">Rodar 90 Graus</string>
+    <string name="rotateNegative90" translatable="false">Rodar o padrao 90 graus no relogio</string>
 </resources>
