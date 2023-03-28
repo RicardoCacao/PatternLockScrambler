@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".SettingsActivity"
     android:background="@color/cardview_dark_background">
 
     <com.andrognito.patternlockview.PatternLockView
@@ -20,37 +20,35 @@
         app:dotSelectedSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.852"
         app:normalStateColor="@color/white"
         app:pathEndAnimationDuration="100"
         app:pathWidth="4dp"
         app:wrongStateColor="@color/pomegranate" />
 
-    <TextView
-        android:id="@+id/clockTextView"
-        android:layout_width="138dp"
-        android:layout_height="84dp"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:text="@string/hourminute"
-        android:textColor="#BCAAA4"
-        app:layout_constraintBottom_toTopOf="@+id/pattern_lock_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.681"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842" />
-
     <Button
-        android:id="@+id/setPatternActivityButton"
+        android:id="@+id/setPattern"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_pattern_page"
-        app:layout_constraintBottom_toTopOf="@+id/clockTextView"
+        android:layout_marginBottom="28dp"
+        android:text="@string/set_pattern_button"
+        app:layout_constraintBottom_toTopOf="@+id/pattern_lock_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/goBackButton"
+        android:layout_width="67dp"
+        android:layout_height="61dp"
+        app:layout_constraintBottom_toTopOf="@+id/setPattern"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.073" />
+        app:layout_constraintVertical_bias="0.078"
+        app:srcCompat="@drawable/ic_baseline_keyboard_return_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

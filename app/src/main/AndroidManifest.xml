@@ -25,6 +25,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".SettingsActivity"/>
+        <provider
+            android:authorities="com.example.prototipotese.provider"
+            android:name="com.example.prototipotese.AppProvider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

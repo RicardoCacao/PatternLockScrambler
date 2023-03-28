@@ -3,4 +3,6 @@
     <string name="rodar_90_graus" tools:ignore="ExtraTranslation" translatable="false">Rodar 90 Graus</string>
     <string name="rotateNegative90" translatable="false">Rodar o padrao 90 graus no relogio</string>
     <string name="hourminute">hourminute</string>
+    <string name="set_pattern_page">Pagina para definir padrao</string>
+    <string name="set_pattern_button">Definir padrão</string>
 </resources>

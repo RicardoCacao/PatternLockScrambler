@@ -23,22 +23,16 @@ object MatrixOperations {
                 }
             }
         }
-        val matrix1 = Array(rows) { Array(cols) { 0 } }
+        val result = Array(rows) { Array(cols) { 0 } }
         var count: Int = 1
         for (h in list.indices) {
             if (list[h] / cols < 1.0) {
                 var row = 0
                 Log.d(javaClass.name, "${list[h]} is row: $row")
 
-//                if (list[h] == 0){
-//                    matrix1[row][0] = count
-//                    Log.d(javaClass.name, "${list[h]} is column: 0")
-//                }
-//                else {
                 val col = list[h] % cols
-                matrix1[row][col] = count
+                result[row][col] = count
                 Log.d(javaClass.name, "${list[h]} is column: $col")
-//                }
 
             } else if (list[h] >= 1.0 && list[h] / cols < 2.0) {
                 var row = 1
@@ -46,18 +40,25 @@ object MatrixOperations {
 
                 val col = list[h] % cols
                 Log.d(javaClass.name, "Doing math of ${list[h]} % $cols which equals in $col")
-                matrix1[row][col] = count
+                result[row][col] = count
                 Log.d(javaClass.name, "${list[h]} is column: $col")
             } else if (list[h] / cols >= 2.0) {
                 var row = 2
                 Log.d(javaClass.name, "${list[h]} is row: $row")
 
                 val col = list[h] % cols
-                matrix1[row][col] = count
+                result[row][col] = count
                 Log.d(javaClass.name, "${list[h]} is column: $col")
             }
             count += 1
 
+
+        }
+        for (f in result.indices) {
+            Log.d(
+                javaClass.name,
+                "################# ${result[f][0]},${result[f][1]},${result[f][2]} ################# "
+            )
         }
 /*
 0 1 2 Primeira row
@@ -114,7 +115,7 @@ input / 3 < 1 => primeira row
             )
 
         }*/
-        for (f in matrix1.indices) {
+/*        for (f in matrix1.indices) {
             //  for (g in 0 .. 2){
             Log.d(
                 javaClass.name,
@@ -122,16 +123,16 @@ input / 3 < 1 => primeira row
             )
             //}
 
-        }
+        }*/
 
-        val mirrorMatrix = mirrorMatrixVert(matrix1)
+/*        val mirrorMatrix = mirrorMatrixVert(matrix1)
         for (f in mirrorMatrix.indices) {
             Log.d(
                 javaClass.name,
                 "################# ${mirrorMatrix[f][0]},${mirrorMatrix[f][1]},${mirrorMatrix[f][2]} ################# "
             )
-        }
-        return matrix
+        }*/
+        return result
     }
 
     fun rotateMatrixplus90(matrix: Array<Array<Int>>): Array<Array<Int>> {
