@@ -12,7 +12,7 @@ import com.example.prototipotese.databinding.ActivitySettingsBinding
 import java.security.MessageDigest
 import kotlin.text.Charsets.UTF_8
 
-
+private var TAG = "Settings Activity"
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
@@ -33,10 +33,13 @@ class SettingsActivity : AppCompatActivity() {
                 contentResolver.delete(HashContract.CONTENT_URI, null, null)
                 val values = ContentValues().apply { put(HashContract.Columns.HASH_VALUE, hash.toHex()) }
                 val uri = contentResolver.insert(HashContract.CONTENT_URI, values)
+                Toast.makeText(this, "Padrão guardado", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, uri.toString())
+
             }
             else{
                 Toast.makeText(this, "Por favor desenhe um padrão antes de pressionar o botão", Toast.LENGTH_SHORT).show()
-            }
+                }
         }
     }
 
@@ -65,8 +68,8 @@ class SettingsActivity : AppCompatActivity() {
                 val matrix = MatrixOperations.listToMatrix(lista, size, size)
                 Log.d(javaClass.name, matrix.contentDeepToString())
                 Log.d(javaClass.name, matrix.hashCode().toString())
-
-                hash = sha256(matrix.toString())
+                val flattenedMatrix = matrix.flatMap { it.asList() }
+                hash = sha256(flattenedMatrix.toString())
                 Log.d(javaClass.name, "Hash of the pattern is ${hash.toHex()}")
             }
 
