@@ -8,7 +8,7 @@ object Clock {
     fun isHourEven(
         hora: String = DateTimeFormatter
             .ofPattern("HH:mm")
-            .withZone(ZoneOffset.UTC)
+            .withZone(ZoneOffset.ofHours(1))
             .format(Instant.now())
     ): Boolean {
 
@@ -18,7 +18,7 @@ object Clock {
     fun isMinuteEven(
         hora: String = DateTimeFormatter
             .ofPattern("HH:mm")
-            .withZone(ZoneOffset.UTC)
+            .withZone(ZoneOffset.ofHours(1))
             .format(Instant.now())
     ): Boolean {
         return hora.substringAfter(":").toInt() % 2 == 0
