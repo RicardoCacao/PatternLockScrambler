@@ -28,7 +28,7 @@ internal class AppDatabase private constructor(context: Context): SQLiteOpenHelp
         //Log.d(TAG, "onCreate: starts")
         val sSQL = """CREATE TABLE ${HashContract.TABLE_NAME} (
             ${HashContract.Columns.ID} INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            ${HashContract.Columns.HASH_VALUE} TEXT NOT NULL);""".replaceIndent("")
+            ${HashContract.Columns.HASH_VALUE} STRING NOT NULL);""".replaceIndent("")
         //Log.d(TAG, sSQL)
         db.execSQL(sSQL)
 
