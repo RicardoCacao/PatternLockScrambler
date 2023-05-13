@@ -1,11 +1,11 @@
 package com.example.prototipotese
 
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.database.getStringOrNull
 import com.andrognito.patternlockview.PatternLockView
 import com.andrognito.patternlockview.PatternLockView.Dot
 import com.andrognito.patternlockview.listener.PatternLockViewListener
@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter
 
 
 private const val TAG = "Activity Main"
-const val StoredPatternInSettings = "034125"
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         DateTimeFormatter.ISO_INSTANT.format(Instant.now())
         binding.clockTextView.text = DateTimeFormatter
             .ofPattern("HH:mm")
-            .withZone(ZoneOffset.UTC)
+            .withZone(ZoneOffset.ofHours(1))
             .format(Instant.now())
 
         val goToSettingPageButton = binding.setPatternActivityButton
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             override fun onStarted() {
                 hora = DateTimeFormatter
                     .ofPattern("HH:mm")
-                    .withZone(ZoneOffset.UTC)
+                    .withZone(ZoneOffset.ofHours(1))
                     .format(Instant.now())
                 binding.clockTextView.text = hora
                 Log.d(javaClass.name, "Pattern drawing started")
@@ -107,11 +106,13 @@ class MainActivity : AppCompatActivity() {
                             columns.plus(",${resultingMatrix[f][g]}")
                         }
                     }
-                    Log.d(javaClass.name, "88888888888888888 $columns 88888888888888888")
+                    //Log.d(javaClass.name, "88888888888888888 $columns 88888888888888888")
                 }
                 Log.d(TAG, resultingMatrix.contentDeepToString())
 
-                checkAuthenticity(resultingMatrix)
+                if(checkAuthenticity(resultingMatrix)){
+                    Toast.makeText(this@MainActivity, "Autenticado!!!!",Toast.LENGTH_SHORT).show()
+                }
 
             }
 
@@ -125,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         patternLockView: PatternLockView,
         pattern: List<Dot>
     ): String {
-        if (pattern == null) {
+        if (pattern.isEmpty()) {
             return ""
         }
         val patternSize = pattern.size
@@ -138,32 +139,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun checkAuthenticity(matrix: Array<Array<Int>>): Boolean {
-        val hash = sha256(matrix.toString()).toHex()
-        val projection = arrayOf(HashContract.Columns.HASH_VALUE)
-        val cursor = contentResolver.query(HashContract.CONTENT_URI, projection, null, null, null)
-        var dbHash = ""
+        val flattenedMatrix = matrix.flatMap { it.asList() }
+        val hash = sha256(flattenedMatrix.toString()).toHex()
+        //val projection = arrayOf(HashContract.Columns.HASH_VALUE)
+        val cursor = contentResolver.query(HashContract.CONTENT_URI, null, null, null, null)
+        var dbHash = "1"
         //val dbhash2 = cursor?.getString(1)
         matrix.hashCode()
         Log.d(TAG, matrix.hashCode().toString())
-        val hashColumnIndex = cursor?.getColumnIndex(HashContract.Columns.HASH_VALUE)
-        if (hashColumnIndex != null && hashColumnIndex > 0){
-            if (cursor.moveToFirst()){
-                if (!(cursor.getString(hashColumnIndex).isNullOrEmpty())){
-                    dbHash = getString(hashColumnIndex)
+
+        try {
+
+
+            val hashColumnIndex = cursor?.getColumnIndex(HashContract.Columns.HASH_VALUE)
+            if (hashColumnIndex != null && hashColumnIndex >= 0) {
+                if (cursor.moveToNext()) {
+                    if (!(cursor.getStringOrNull(hashColumnIndex).isNullOrEmpty())) {
+                        dbHash = cursor.getString(hashColumnIndex)
+
+                    }
                 }
             }
+
+            Log.d(javaClass.name, "A hash de agora é $hash")
+            //       Log.d(javaClass.name,"A hash da db é $dbhash2")
+            Log.d(javaClass.name, "A hash depois das ligaçoes todas é $dbHash")
+            Log.d(javaClass.name, "O indice da coluna é $hashColumnIndex")
+        } catch (e: Exception) {
+            Log.e(javaClass.name, "Exception, brother: $e")
         }
-
-        Log.d(javaClass.name,"A hash de agora é $hash")
- //       Log.d(javaClass.name,"A hash da db é $dbhash2")
-        Log.d(javaClass.name,"A hash depois das ligaçoes todas é $dbHash")
-        Log.d(javaClass.name,"O indice da coluna é $hashColumnIndex")
-
         cursor?.close()
 
         return hash == dbHash
 
-        TODO()
 
     }
 
@@ -182,8 +190,8 @@ class MainActivity : AppCompatActivity() {
 
 
     //These two functions are from here: https://stackoverflow.com/questions/64171624/how-to-generate-an-md5-hash-in-kotlin
-    fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte) }
-    fun sha256(str: String): ByteArray = MessageDigest.getInstance("SHA-256").digest(
+    private fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte) }
+    private fun sha256(str: String): ByteArray = MessageDigest.getInstance("SHA-256").digest(
         str.toByteArray(
             Charsets.UTF_8
         )
