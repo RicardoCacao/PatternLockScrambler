@@ -18,7 +18,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 
 private const val TAG = "AppProvider"
 
-const val CONTENT_AUTHORITY = "com.example.prototipotese.provider"
+const val CONTENT_AUTHORITY = "com.example.patternlockscrambler.provider"
 
 private const val HASHES = 100
 private const val HASHES_ID = 101
