@@ -28,27 +28,27 @@ object MatrixOperations {
         for (h in list.indices) {
             if (list[h] / cols < 1.0) {
                 var row = 0
-                Log.d(javaClass.name, "${list[h]} is row: $row")
+                //Log.d(javaClass.name, "${list[h]} is row: $row")
 
                 val col = list[h] % cols
                 result[row][col] = count
-                Log.d(javaClass.name, "${list[h]} is column: $col")
+                //Log.d(javaClass.name, "${list[h]} is column: $col")
 
             } else if (list[h] >= 1.0 && list[h] / cols < 2.0) {
                 var row = 1
-                Log.d(javaClass.name, "${list[h]} is row: $row")
+                //Log.d(javaClass.name, "${list[h]} is row: $row")
 
                 val col = list[h] % cols
-                Log.d(javaClass.name, "Doing math of ${list[h]} % $cols which equals in $col")
+                //Log.d(javaClass.name, "Doing math of ${list[h]} % $cols which equals in $col")
                 result[row][col] = count
-                Log.d(javaClass.name, "${list[h]} is column: $col")
+                //Log.d(javaClass.name, "${list[h]} is column: $col")
             } else if (list[h] / cols >= 2.0) {
                 var row = 2
-                Log.d(javaClass.name, "${list[h]} is row: $row")
+                //Log.d(javaClass.name, "${list[h]} is row: $row")
 
                 val col = list[h] % cols
                 result[row][col] = count
-                Log.d(javaClass.name, "${list[h]} is column: $col")
+                //Log.d(javaClass.name, "${list[h]} is column: $col")
             }
             count += 1
 
