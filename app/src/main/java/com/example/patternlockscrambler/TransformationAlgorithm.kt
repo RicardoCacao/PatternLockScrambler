@@ -1,6 +1,9 @@
 package com.example.patternlockscrambler
 
+import android.util.Log
+
 private var TAG = "Transformation Algorithm"
+
 object TransformationAlgorithm {
 
     /**
@@ -50,6 +53,7 @@ object TransformationAlgorithm {
      * @param matrix The input 2D matrix (array of arrays of Int) to be rotated.
      * @return A new 2D matrix (array of arrays of Int) representing the rotated input matrix.
      */
+/*
     fun rotate270Degrees(matrix: Array<Array<Int>>): Array<Array<Int>> {
 
         // Determine the dimensions of the input matrix
@@ -78,6 +82,50 @@ object TransformationAlgorithm {
             rotatedMatrix = Array(cols) { Array(rows) { 0 } }
         }
 
+        for (f in result.indices) {
+            var columns: String = ""
+            for (g in 0 until result[f].size) {
+                columns = if (g == 0) {
+                    columns.plus("${result[f][g]}")
+                }else{
+                    columns.plus(",${result[f][g]}")
+                }
+
+            }
+            Log.d(TAG, "22222222222222222 $columns 22222222222222222")
+
+        }
+
+        // Return the 270-degree rotated matrix
+        return result
+    }
+*/
+
+    /**
+     * Rotates a given 2D matrix (represented as an array of arrays) 270 degrees clockwise.
+     *
+     * @param matrix The input 2D matrix (array of arrays of Int) to be rotated.
+     * @return A new 2D matrix (array of arrays of Int) representing the rotated input matrix.
+     */
+    fun rotate270Degrees(matrix: Array<Array<Int>>): Array<Array<Int>> {
+
+        // Determine the dimensions of the input matrix
+        val rows = matrix.size
+        val cols = matrix[0].size
+
+        // Initialize the result of the input matrix
+        val result = Array(cols) { Array(rows) { 0 } }
+
+        // Rotate the matrix 90 degrees counterclockwise three times (equivalent to 270 degrees)
+        // Iterate over the elements of the current matrix
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                // Assign the rotated element to the corresponding position in the result matrix
+                result[cols - j - 1][i] = matrix[i][j]
+            }
+        }
+
+
 /*        for (f in result.indices) {
             var columns: String = ""
             for (g in 0 until result[f].size) {
@@ -88,13 +136,15 @@ object TransformationAlgorithm {
                 }
 
             }
-            //Log.d(TAG, "22222222222222222 $columns 22222222222222222")
+            Log.d(TAG, "222211 $columns 222211")
 
-        } */
+        }*/
 
         // Return the 270-degree rotated matrix
         return result
     }
+
+
     /**
      * Mirrors a given 2D matrix (represented as a nested array of integers) vertically by reflecting its elements along the horizontally central axis.
      *
@@ -113,17 +163,17 @@ object TransformationAlgorithm {
 3 4 5 segunda row
 6 7 8 terceira row
 */
- /*       for (f in result.indices) {
-            var columns: String = ""
-            for (g in 0 until result[f].size) {
-                columns = if (g == 0) {
-                    columns.plus("${result[f][g]}")
-                }else{
-                    columns.plus(",${result[f][g]}")
-                }
-            }
-           // Log.d(TAG, "33333333333333333 $columns 33333333333333333")
-        }*/
+        /*       for (f in result.indices) {
+                   var columns: String = ""
+                   for (g in 0 until result[f].size) {
+                       columns = if (g == 0) {
+                           columns.plus("${result[f][g]}")
+                       }else{
+                           columns.plus(",${result[f][g]}")
+                       }
+                   }
+                  // Log.d(TAG, "33333333333333333 $columns 33333333333333333")
+               }*/
 
         return result
     }
@@ -144,23 +194,23 @@ object TransformationAlgorithm {
             }
         }
 
-/*        for (f in result.indices) {
+        for (f in result.indices) {
             var columns: String = ""
             for (g in 0 until result[f].size) {
                 columns = if (g == 0) {
                     columns.plus("${result[f][g]}")
-                }else{
+                } else {
                     columns.plus(",${result[f][g]}")
                 }
 
-//                Log.d(
-//                    javaClass.name,
-//                    "################# ${result[f][0]},${result[f][1]},${result[f][2]} #################"
-//                )
-                //Log.d(javaClass.name, result.contentDeepToString())
+                Log.d(
+                    javaClass.name,
+                    "################# ${result[f][0]},${result[f][1]},${result[f][2]} #################"
+                )
+                Log.d(javaClass.name, result.contentDeepToString())
             }
-            //Log.d(TAG, "44444444444444444 $columns 44444444444444444")
-        }*/
+            Log.d(TAG, "44444444444444444 $columns 44444444444444444")
+        }
 
         return result
     }
