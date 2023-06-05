@@ -106,9 +106,7 @@ class MainActivity : AppCompatActivity() {
                             columns.plus(",${resultingMatrix[f][g]}")
                         }
                     }
-                    //Log.d(javaClass.name, "88888888888888888 $columns 88888888888888888")
                 }
-                Log.d(TAG, resultingMatrix.contentDeepToString())
 
                 if(checkAuthenticity(resultingMatrix)){
                     Toast.makeText(this@MainActivity, "Autenticado!!!!",Toast.LENGTH_SHORT).show()
